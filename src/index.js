@@ -1,17 +1,37 @@
-import React from 'react';
+import React, {
+  useState,
+  useEffect
+} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+function GitHubUser({ login }) {
+  const [ data, setData ] = useState(null);
+  useEffect(()=> {
+    fetch(`https://api.github.com/users/${login}`)
+      .then(res => res.json())
+      .then(setData)
+      .catch(console.log.error);
+  }, []);
+
+  if(data) {
+    return (
+      <div>
+        <h1>
+          { data.login }
+        </h1>
+        <img src = { data.avatar_url } alt = "user avatar" width = { 100 } />
+      </div>
+    )
+  }
+  return null;
+}
+
+function App() {
+  return <GitHubUser login="yq4103"/>
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
