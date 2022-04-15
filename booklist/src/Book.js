@@ -5,7 +5,7 @@ const Book = (props) => {
   const { image, title, author } = props.book
 
   const clickHandler = () => {
-    alert('No $$$');
+    alert('No $$');
   }
 
   return (
